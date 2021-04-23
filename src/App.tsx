@@ -1,14 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import logo from './logo.svg'
+import './App.css'
+import { PreloadedQuery, usePreloadedQuery } from 'react-relay'
+import { SubGameSessionByIdQuery } from './relay'
+import { relaySubGameSessionByIdQuery } from './__generated__/relaySubGameSessionByIdQuery.graphql'
 
-function App() {
+interface AppProps {
+  preloadedQuery: PreloadedQuery<any>
+}
+
+const App: React.FC<AppProps> = function App (props) {
+  const data = usePreloadedQuery<relaySubGameSessionByIdQuery>(SubGameSessionByIdQuery, props.preloadedQuery)
+  console.log('data', data)
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          ${data?.subGameSessionById?.subGameSession?.id}
+        </p>
+        <p>
+          ${data?.subGameSessionById?.subGameSession?.maxActivePlayers}
         </p>
         <a
           className="App-link"
@@ -20,7 +32,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

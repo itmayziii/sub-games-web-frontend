@@ -8,11 +8,19 @@
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "@types/react": "~17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-relay": "~11.0.1",
+    "babel-plugin-relay": "~11.0.2",
+    "graphql": "~15.5.0",
+    "react": "0.0.0-experimental-a15586001",
+    "react-dom": "0.0.0-experimental-a15586001",
+    "react-relay": "~11.0.2",
+    "react-router-dom": "~5.2.0",
     "react-scripts": "4.0.3",
+    "relay-compiler": "~11.0.2",
+    "relay-compiler-language-typescript": "~14.0.0",
+    "relay-runtime": "~11.0.2",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },
@@ -20,13 +28,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "relay": "relay-compiler --schema schema.graphql --language typescript --src ./src/ --watchman false $@",
+    "generate:schema": "npx get-graphql-schema http://localhost:4000/graphql > schema.graphql"
   },
   "browserslist": {
     "production": [
@@ -39,5 +43,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "~4.22.0",
+    "eslint": "~7.24.0",
+    "eslint-config-standard-with-typescript": "~20.0.0",
+    "eslint-plugin-import": "~2.22.1",
+    "eslint-plugin-node": "~11.1.0",
+    "eslint-plugin-promise": "~4.3.1"
   }
 }
