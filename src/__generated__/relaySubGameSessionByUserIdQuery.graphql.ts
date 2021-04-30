@@ -3,11 +3,11 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type relaySubGameSessionByIdQueryVariables = {
-    id: string;
+export type relaySubGameSessionByUserIdQueryVariables = {
+    userId: string;
 };
-export type relaySubGameSessionByIdQueryResponse = {
-    readonly subGameSessionById: {
+export type relaySubGameSessionByUserIdQueryResponse = {
+    readonly activeSubGameSessionByUserId: {
         readonly subGameSession: {
             readonly id: string;
             readonly isSubOnly: boolean;
@@ -15,18 +15,18 @@ export type relaySubGameSessionByIdQueryResponse = {
         } | null;
     };
 };
-export type relaySubGameSessionByIdQuery = {
-    readonly response: relaySubGameSessionByIdQueryResponse;
-    readonly variables: relaySubGameSessionByIdQueryVariables;
+export type relaySubGameSessionByUserIdQuery = {
+    readonly response: relaySubGameSessionByUserIdQueryResponse;
+    readonly variables: relaySubGameSessionByUserIdQueryVariables;
 };
 
 
 
 /*
-query relaySubGameSessionByIdQuery(
-  $id: ID!
+query relaySubGameSessionByUserIdQuery(
+  $userId: ID!
 ) {
-  subGameSessionById(input: {id: $id}) {
+  activeSubGameSessionByUserId(input: {id: $userId}) {
     subGameSession {
       id
       isSubOnly
@@ -41,7 +41,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "userId"
   }
 ],
 v1 = [
@@ -53,16 +53,16 @@ v1 = [
           {
             "kind": "Variable",
             "name": "id",
-            "variableName": "id"
+            "variableName": "userId"
           }
         ],
         "kind": "ObjectValue",
         "name": "input"
       }
     ],
-    "concreteType": "SubGameSessionByIdPayload",
+    "concreteType": "ActiveSubGameSessionByUserIdPayload",
     "kind": "LinkedField",
-    "name": "subGameSessionById",
+    "name": "activeSubGameSessionByUserId",
     "plural": false,
     "selections": [
       {
@@ -106,7 +106,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "relaySubGameSessionByIdQuery",
+    "name": "relaySubGameSessionByUserIdQuery",
     "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -115,18 +115,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "relaySubGameSessionByIdQuery",
+    "name": "relaySubGameSessionByUserIdQuery",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "bb93ba58681a3f139b301d3899bd3236",
+    "cacheID": "74c09e8c8a070683fa97e9759e6aff09",
     "id": null,
     "metadata": {},
-    "name": "relaySubGameSessionByIdQuery",
+    "name": "relaySubGameSessionByUserIdQuery",
     "operationKind": "query",
-    "text": "query relaySubGameSessionByIdQuery(\n  $id: ID!\n) {\n  subGameSessionById(input: {id: $id}) {\n    subGameSession {\n      id\n      isSubOnly\n      maxActivePlayers\n    }\n  }\n}\n"
+    "text": "query relaySubGameSessionByUserIdQuery(\n  $userId: ID!\n) {\n  activeSubGameSessionByUserId(input: {id: $userId}) {\n    subGameSession {\n      id\n      isSubOnly\n      maxActivePlayers\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'f214204cc3a41589bf821f057c343aaf';
+(node as any).hash = '2566af24e84461fc59eadd0dc927f601';
 export default node;

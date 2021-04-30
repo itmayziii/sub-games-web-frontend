@@ -4,11 +4,11 @@ directive @specifiedBy(
   url: String!
 ) on SCALAR
 
-input ActiveSubGameSessionByIdInput {
+input ActiveSubGameSessionByUserIdInput {
   id: ID!
 }
 
-type ActiveSubGameSessionByIdPayload {
+type ActiveSubGameSessionByUserIdPayload {
   subGameSession: SubGameSession
 }
 
@@ -59,6 +59,14 @@ interface Node {
   id: ID!
 }
 
+"""https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo"""
+type PageInfo {
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
 type Player implements UserInterface & PlayerInterface & Node {
   id: ID!
   username: String!
@@ -76,8 +84,9 @@ interface PlayerInterface {
 type Query {
   """https://relay.dev/graphql/objectidentification.htm#sec-Node-Interface"""
   node(id: ID!): Node
+  sessionsByUserId(input: SessionsByUserIdInput!): SessionsConnection!
   activeSubGameSessionByUsername(input: ActiveSubGameSessionByUsernameInput!): ActiveSubGameSessionByUsernamePayload!
-  activeSubGameSessionById(input: ActiveSubGameSessionByIdInput!): ActiveSubGameSessionByIdPayload!
+  activeSubGameSessionByUserId(input: ActiveSubGameSessionByUserIdInput!): ActiveSubGameSessionByUserIdPayload!
   subGameSessionById(input: SubGameSessionByIdInput!): SubGameSessionByIdPayload!
 }
 
@@ -95,6 +104,43 @@ input RefreshTokenInput {
 
 type RefreshTokenPayload {
   success: Boolean!
+}
+
+type Session implements Node {
+  id: ID!
+
+  """Last sub game session which may be be active or inactive."""
+  subGameSession: SubGameSession
+
+  """Currently active Twitch stream."""
+  twitchSession: TwitchSession
+}
+
+type SessionEdge {
+  node: Session!
+
+  """
+  This cursor is not spec compliant - https://relay.dev/graphql/connections.htm#sec-Cursor. Instead this cursor will be
+  the same for every edge and can be used to retrieve the next set of results. This difference from the spec is due to
+  the limitations of the Twitch API.
+  """
+  cursor: String
+}
+
+"""https://relay.dev/graphql/connections.htm#sec-Arguments"""
+input SessionsByUserIdInput {
+  id: ID!
+
+  """
+  https://relay.dev/graphql/connections.htm#sec-Forward-pagination-arguments
+  """
+  first: Int
+  after: String
+}
+
+type SessionsConnection {
+  edges: [SessionEdge!]!
+  pageInfo: PageInfo!
 }
 
 input StartSubGameSessionInput {
@@ -128,6 +174,13 @@ input SubGameSessionByIdInput {
 
 type SubGameSessionByIdPayload {
   subGameSession: SubGameSession
+}
+
+type TwitchSession {
+  gameName: String!
+  username: String!
+  viewerCount: Int!
+  thumbnailURL: String!
 }
 
 type User implements UserInterface & Node {
