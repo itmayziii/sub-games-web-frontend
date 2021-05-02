@@ -3,19 +3,21 @@ import PersonIcon from '@material-ui/icons/Person'
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { SvgIcon } from '@material-ui/core'
-import { Link, matchPath, useLocation } from 'react-router-dom'
+import { Link, matchPath, useLocation, generatePath } from 'react-router-dom'
 import ROUTES from '../../routes'
 import cn from 'classnames'
 import styles from './bottom-nav.module.css'
+import { useRecoilValue } from 'recoil'
+import { UserState, userStateAtom } from '../../recoil/atoms/user'
 
 interface ItemProps {
   icon: typeof SvgIcon
   name: string
   to: string
 }
-const Item: React.FC<ItemProps> = function Item ({ icon: Icon, name, to }) {
+function Item ({ icon: Icon, name, to }: ItemProps): React.ReactElement {
   const location = useLocation()
-  const match = matchPath(location.pathname, to)
+  const match = matchPath(location.pathname, { path: to, exact: true })
   const isActive = match !== null
   return (
     <Link
@@ -27,14 +29,20 @@ const Item: React.FC<ItemProps> = function Item ({ icon: Icon, name, to }) {
   )
 }
 
-const BottomNav: React.FC = function BottomNav () {
+/**
+ * The Material UI bottom nav sucked, it was very hard to customize, honestly easier to just write this simple component.
+ */
+export default function BottomNav (): React.ReactElement {
+  const user = useRecoilValue<UserState>(userStateAtom)
+  if (user === null) throw new Error('Bottom nav requires user.')
+
   return (
-    <nav className='fixed bottom-0 left-0 bg-primary w-full h-14 flex justify-between'>
-      <Item icon={PersonIcon} name='My Stream' to={ROUTES.login} />
-      <Item icon={VideogameAssetIcon} name='Sub Games' to={ROUTES.sessions} />
-      <Item icon={SettingsIcon} name='Settings' to={ROUTES.settings} />
+    <nav className='fixed bottom-0 left-0 bg-primary w-full h-14 flex justify-center'>
+      <div className='flex justify-between max-w-4xl w-full'>
+        <Item icon={PersonIcon} name='My Stream' to={generatePath(ROUTES.userIdSession, { userId: user?.sub })} />
+        <Item icon={VideogameAssetIcon} name='Sub Games' to={ROUTES.sessions} />
+        <Item icon={SettingsIcon} name='Settings' to={ROUTES.settings} />
+      </div>
     </nav>
   )
 }
-
-export default BottomNav

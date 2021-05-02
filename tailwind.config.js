@@ -13,7 +13,8 @@ module.exports = {
         light: '#F2F2F2',
         dark: '#5B5561'
       },
-      white: '#FFF'
+      white: '#FFF',
+      error: '#F01818'
     },
     extend: {}
   },

@@ -1,27 +1,22 @@
 import { Environment, Network, RecordSource, Store } from 'relay-runtime'
+import { GraphQLClient } from 'graphql-request'
+
+const graphQLClient = new GraphQLClient('http://localhost:4000/graphql', {
+  credentials: 'include'
+})
 
 async function fetchGraphQL (text: string, variables: any): Promise<any> {
-  const response = await fetch('http://localhost:4000/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      query: text,
-      variables
-    }),
-    credentials: 'include'
-  })
-
-  // Get the response as JSON
-  return await response.json()
+  return await graphQLClient.request(text, variables)
+    .then(data => {
+      return {
+        data
+      }
+    })
 }
 
 // Relay passes a "params" object with the query name and text. So we define a helper function
 // to call our fetchGraphQL utility with params.text.
 async function fetchRelay (params: any, variables: any): Promise<any> {
-  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-  console.log(`fetching query ${params.name} with ${JSON.stringify(variables)}`)
   return await fetchGraphQL(params.text, variables)
 }
 

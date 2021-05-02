@@ -13,13 +13,17 @@ export type relaySessionsByUserIdQueryResponse = {
                 readonly id: string;
                 readonly subGameSession: {
                     readonly id: string;
+                    readonly isActive: boolean;
                 } | null;
                 readonly twitchSession: {
                     readonly gameName: string;
                     readonly thumbnailURL: string;
-                    readonly username: string;
+                    readonly user: {
+                        readonly id: string;
+                        readonly username: string;
+                    };
                     readonly viewerCount: number;
-                } | null;
+                };
             };
         }>;
     };
@@ -41,11 +45,15 @@ query relaySessionsByUserIdQuery(
         id
         subGameSession {
           id
+          isActive
         }
         twitchSession {
           gameName
           thumbnailURL
-          username
+          user {
+            id
+            username
+          }
           viewerCount
         }
       }
@@ -115,7 +123,14 @@ v2 = [
                 "name": "subGameSession",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/)
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "isActive",
+                    "storageKey": null
+                  }
                 ],
                 "storageKey": null
               },
@@ -144,8 +159,20 @@ v2 = [
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "username",
+                    "concreteType": "User",
+                    "kind": "LinkedField",
+                    "name": "user",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "username",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   },
                   {
@@ -186,14 +213,14 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "451a77ddc989b0a62207fce17006176e",
+    "cacheID": "749a4bc82a0962985975246063518ade",
     "id": null,
     "metadata": {},
     "name": "relaySessionsByUserIdQuery",
     "operationKind": "query",
-    "text": "query relaySessionsByUserIdQuery(\n  $userId: ID!\n) {\n  sessionsByUserId(input: {id: $userId}) {\n    edges {\n      node {\n        id\n        subGameSession {\n          id\n        }\n        twitchSession {\n          gameName\n          thumbnailURL\n          username\n          viewerCount\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query relaySessionsByUserIdQuery(\n  $userId: ID!\n) {\n  sessionsByUserId(input: {id: $userId}) {\n    edges {\n      node {\n        id\n        subGameSession {\n          id\n          isActive\n        }\n        twitchSession {\n          gameName\n          thumbnailURL\n          user {\n            id\n            username\n          }\n          viewerCount\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3a633654f8105aa1edf52e244aff9098';
+(node as any).hash = '2b8a0bfb07f7912d0a9dd7a8668c4ef8';
 export default node;

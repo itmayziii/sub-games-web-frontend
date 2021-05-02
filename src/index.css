@@ -2,7 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply h-full;
+}
+
 body {
-  @apply text-gray-dark;
+  @apply bg-gray-light text-gray-dark h-full;
+}
+
+#root {
+  @apply min-h-full;
   padding-bottom: 56px; /* 56px for bottom nav height */
 }

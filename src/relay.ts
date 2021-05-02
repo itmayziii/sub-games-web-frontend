@@ -20,11 +20,15 @@ export const SessionsByUserIdQuery = graphql`
           id
           subGameSession {
             id
+            isActive
           }
           twitchSession {
             gameName
             thumbnailURL
-            username
+            user {
+              id
+              username
+            }
             viewerCount
           }
         }

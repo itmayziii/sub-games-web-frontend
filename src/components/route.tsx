@@ -15,13 +15,17 @@ interface RouteProps {
   requiresAuth?: boolean
 }
 
-const Route: React.FC<RouteProps> = function Route ({
+function TemporaryError (): React.ReactElement {
+  return <div>There was an error</div>
+}
+
+export default function Route ({
   component: Component,
   path,
   exact = true,
   prepare,
   requiresAuth = true
-}) {
+}: RouteProps): React.ReactElement {
   const [user] = useRecoilState<UserState>(userStateAtom)
   const location = useLocation()
 
@@ -30,7 +34,7 @@ const Route: React.FC<RouteProps> = function Route ({
   }
 
   return (
-    <RouteComponent path={path} exact={exact} render={() => {
+    <RouteComponent path={path} exact={exact} render={(routeProps) => {
       // Using matchPath to get params instead of "useParams" as we can't use useParams inside this component since
       // the route does not get rendered until after this component is rendered.
       const match = matchPath(location.pathname, {
@@ -40,7 +44,7 @@ const Route: React.FC<RouteProps> = function Route ({
       if (match === null) throw new Error(`Expecting a match for path - ${path} - but found none.`)
 
       return (
-        <ErrorBoundary fallback={<div>There was an Error</div>}>
+        <ErrorBoundary fallback={TemporaryError}>
           <Suspense fallback={<ClipLoader size={150} />}>
             {prepare === undefined ? <Component /> : <Component preloadedQuery={prepare(match.params)}/>}
           </Suspense>
@@ -49,5 +53,3 @@ const Route: React.FC<RouteProps> = function Route ({
     }} />
   )
 }
-
-export default Route

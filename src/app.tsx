@@ -23,7 +23,7 @@ const NotFoundPageComponent = React.lazy(async () => await import('./pages/not-f
 const SessionsPageComponent = React.lazy(async () => await import('./pages/sessions-page'))
 const SettingsPageComponent = React.lazy(async () => await import('./pages/settings-page'))
 
-const App: React.FC = function App () {
+export default function App (): React.ReactElement {
   const [user, setUser] = useRecoilState<UserState>(userStateAtom)
   const [commit] = useMutation<relayRefreshTokenMutation>(RefreshTokenMutation)
 
@@ -99,7 +99,6 @@ const App: React.FC = function App () {
           exact={true}
           prepare={() => {
             if (user === undefined || user === null) throw new Error('User must be present to prepare data.')
-            console.log('suer', user.sub)
             return loadQuery<relaySessionsByUserIdQuery>(RelayEnvironment, SessionsByUserIdQuery, { userId: user.sub })
           }}
         />
@@ -116,5 +115,3 @@ const App: React.FC = function App () {
     </Router>
   )
 }
-
-export default App

@@ -1,22 +1,16 @@
 .card {
-  @apply mt-4 shadow-lg w-full flex justify-center flex-wrap mx-2 rounded border border-transparent;
+  @apply mt-4 shadow-lg w-full mx-2 rounded border border-transparent hover:shadow-2xl transform-gpu hover:scale-105;
   max-width: 300px;
 }
 
 .dot {
-  height: 20px;
-  width: 20px;
+  @apply h-4 w-4 rounded-full inline-block;
   background-color: #BAF018;
-  border-radius: 50%;
-  display: inline-block;
 }
 
 .inactiveDot {
-  height: 20px;
-  width: 20px;
+  @apply h-4 w-4 rounded-full inline-block;
   background-color: #F01818;
-  border-radius: 50%;
-  display: inline-block;
 }
 
 .imageWrapper {

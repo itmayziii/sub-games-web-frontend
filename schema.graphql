@@ -113,7 +113,7 @@ type Session implements Node {
   subGameSession: SubGameSession
 
   """Currently active Twitch stream."""
-  twitchSession: TwitchSession
+  twitchSession: TwitchSession!
 }
 
 type SessionEdge {
@@ -177,8 +177,8 @@ type SubGameSessionByIdPayload {
 }
 
 type TwitchSession {
+  user: User!
   gameName: String!
-  username: String!
   viewerCount: Int!
   thumbnailURL: String!
 }

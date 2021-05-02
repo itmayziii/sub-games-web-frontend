@@ -1,7 +1,5 @@
 import React from 'react'
 
-const LoginPage: React.FC = function LoginPage () {
+export default function LoginPage (): React.ReactElement {
   return <div>Please login</div>
 }
-
-export default LoginPage

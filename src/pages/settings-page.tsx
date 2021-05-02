@@ -1,11 +1,9 @@
 import React from 'react'
 
-const SettingsPage: React.FC = function SettingsPage () {
+export default function SettingsPage (): React.ReactElement {
   return (
     <>
       Settings Page
     </>
   )
 }
-
-export default SettingsPage
