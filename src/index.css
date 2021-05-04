@@ -7,10 +7,30 @@ html {
 }
 
 body {
-  @apply bg-gray-light text-gray-dark h-full;
+  @apply bg-background text-on-background h-full;
 }
 
 #root {
-  @apply min-h-full;
+  @apply min-h-full h-full;
   padding-bottom: 56px; /* 56px for bottom nav height */
+}
+
+.ripple {
+  @apply w-5 h-5 absolute block rounded-full opacity-100 bg-primary-200;
+  animation: ripple .9s;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(10);
+    opacity: 0.375;
+  }
+  100% {
+    transform: scale(35);
+    opacity: 0;
+  }
 }

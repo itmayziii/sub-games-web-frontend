@@ -1,5 +1,29 @@
-import React from 'react'
+import React, { useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
+import Button from '../components/button'
+import twitchLogoWhite from '../assets/images/twitch-logo-white.png'
 
 export default function LoginPage (): React.ReactElement {
-  return <div>Please login</div>
+  const location = useLocation()
+  const query = useMemo<URLSearchParams>(() => {
+    return new URLSearchParams(location.search)
+  }, [location.search])
+
+  const redirectURL = query.get('redirect_url')
+  let twitchLoginURL = 'http://localhost:4000/v1/login'
+  if (redirectURL !== null) {
+    twitchLoginURL += `?redirect_url=${redirectURL}`
+  }
+  return (
+    <div className='flex flex-col justify-center items-center mt-20 md:mt-32'>
+      <Button
+        href={twitchLoginURL}
+        className='flex items-center px-6 py-4'
+        component='a'
+      >
+        <img src={twitchLogoWhite} alt='twitch logo' className='w-8' />
+        <span className='ml-2'>Login with Twitch</span>
+      </Button>
+    </div>
+  )
 }

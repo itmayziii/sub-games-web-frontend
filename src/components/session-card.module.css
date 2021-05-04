@@ -2,18 +2,19 @@
   @apply mt-4 shadow-lg w-full mx-2 rounded border border-transparent hover:shadow-2xl transform-gpu hover:scale-105;
   max-width: 300px;
 }
-
-.dot {
-  @apply h-4 w-4 rounded-full inline-block;
-  background-color: #BAF018;
+.card:hover .inactiveImg {
+  filter: grayscale(80%);
 }
 
-.inactiveDot {
-  @apply h-4 w-4 rounded-full inline-block;
-  background-color: #F01818;
+.img {
+  @apply absolute inset-0 w-full;
+}
+
+.inactiveImg {
+  filter: grayscale(90%);
 }
 
 .imageWrapper {
-  @apply relative bg-gray-light bg-no-repeat h-0 w-full;
+  @apply relative bg-surface h-0 w-full;
   padding-bottom: 55.90666%; /* Padding bottom hack https://www.andyshora.com/css-image-container-padding-hack.html */
 }

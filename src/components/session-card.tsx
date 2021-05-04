@@ -20,7 +20,7 @@ export default function SessionCard ({ className, session }: SessionCardProps): 
     >
       <Link to={generatePath(ROUTES.userIdSession, { userId: session.node.twitchSession.user.id })}>
         <figure className={styles.imageWrapper}>
-          <img className={cn('absolute inset-0 w-full', { 'filter grayscale': !hasActiveSession })} src={image} alt='twitch gameplay thumbnail' />
+          <img className={cn(styles.img, { [styles.inactiveImg]: !hasActiveSession })} src={image} alt='twitch gameplay thumbnail' />
         </figure>
         <div className='p-1 w-full'>
           <div className='flex justify-between items-center'>

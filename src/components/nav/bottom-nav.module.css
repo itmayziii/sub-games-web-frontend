@@ -2,3 +2,23 @@
   @apply text-xs relative;
   top: -.15rem;
 }
+
+.ripple {
+  @apply w-5 h-5 absolute block rounded-full opacity-100 bg-primary-200;
+  animation: ripple .9s;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(10);
+    opacity: 0.375;
+  }
+  100% {
+    transform: scale(35);
+    opacity: 0;
+  }
+}

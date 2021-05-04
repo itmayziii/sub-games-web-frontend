@@ -1,17 +1,19 @@
 import React, { ComponentType, Suspense } from 'react'
-import { Route as RouteComponent, Redirect, matchPath, useLocation } from 'react-router-dom'
+import { Route as RouteComponent, Redirect } from 'react-router-dom'
 import { PreloadedQuery } from 'react-relay'
 import ClipLoader from 'react-spinners/ClipLoader'
 import ErrorBoundary from './errors/error-boundary'
 import { useRecoilState } from 'recoil'
 import { UserState, userStateAtom } from '../recoil/atoms/user'
 import ROUTES from '../routes'
+import AppLayout from '../layouts/app-layout'
 
 interface RouteProps {
   component: ComponentType<{ preloadedQuery?: PreloadedQuery<any> }>
+  layout?: ComponentType<{ currentPath: string, children: React.ReactNode }>
   path: string
   exact?: boolean
-  prepare?: (routeParams?: { [key: string]: string }) => PreloadedQuery<any>
+  prepare?: (routeParams?: { [key: string]: string | undefined }) => PreloadedQuery<any>
   requiresAuth?: boolean
 }
 
@@ -21,34 +23,28 @@ function TemporaryError (): React.ReactElement {
 
 export default function Route ({
   component: Component,
+  layout: Layout = AppLayout,
   path,
   exact = true,
   prepare,
   requiresAuth = true
 }: RouteProps): React.ReactElement {
   const [user] = useRecoilState<UserState>(userStateAtom)
-  const location = useLocation()
 
   if (user === null && requiresAuth) {
-    return <Redirect exact={exact} from={path} to={ROUTES.login} />
+    return <Redirect exact={exact} from={path} to={`${ROUTES.login}?redirect_url=${window.location.href}`} />
   }
 
   return (
     <RouteComponent path={path} exact={exact} render={(routeProps) => {
-      // Using matchPath to get params instead of "useParams" as we can't use useParams inside this component since
-      // the route does not get rendered until after this component is rendered.
-      const match = matchPath(location.pathname, {
-        path,
-        exact
-      })
-      if (match === null) throw new Error(`Expecting a match for path - ${path} - but found none.`)
-
       return (
-        <ErrorBoundary fallback={TemporaryError}>
-          <Suspense fallback={<ClipLoader size={150} />}>
-            {prepare === undefined ? <Component /> : <Component preloadedQuery={prepare(match.params)}/>}
-          </Suspense>
-        </ErrorBoundary>
+        <Layout currentPath={path} >
+          <ErrorBoundary fallback={TemporaryError}>
+            <Suspense fallback={<ClipLoader size={150} />}>
+              {prepare === undefined ? <Component /> : <Component preloadedQuery={prepare(routeProps.match.params)}/>}
+            </Suspense>
+          </ErrorBoundary>
+        </Layout>
       )
     }} />
   )

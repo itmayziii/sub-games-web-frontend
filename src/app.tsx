@@ -14,7 +14,8 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import { relaySubGameSessionByUserIdQuery } from './__generated__/relaySubGameSessionByUserIdQuery.graphql'
 import { relayRefreshTokenMutation } from './__generated__/relayRefreshTokenMutation.graphql'
 import { relaySessionsByUserIdQuery } from './__generated__/relaySessionsByUserIdQuery.graphql'
-import BottomNav from './components/nav/bottom-nav'
+import { ThemeState, themeStateAtom } from './recoil/atoms/theme'
+import EmptyLayout from './layouts/empty-layout'
 
 const history = createBrowserHistory()
 const SessionByUserIdPageComponent = React.lazy(async () => await import('./pages/session-by-user-id-page'))
@@ -25,6 +26,7 @@ const SettingsPageComponent = React.lazy(async () => await import('./pages/setti
 
 export default function App (): React.ReactElement {
   const [user, setUser] = useRecoilState<UserState>(userStateAtom)
+  const [theme] = useRecoilState<ThemeState>(themeStateAtom)
   const [commit] = useMutation<relayRefreshTokenMutation>(RefreshTokenMutation)
 
   useEffect(() => {
@@ -60,10 +62,12 @@ export default function App (): React.ReactElement {
               }
               setUser(decodedAccessToken)
             } catch (error) {
+              Cookies.remove('accessToken')
               setUser(null)
             }
           },
           onError () {
+            Cookies.remove('accessToken')
             setUser(null)
           }
         })
@@ -72,18 +76,23 @@ export default function App (): React.ReactElement {
 
       setUser(decodedAccessToken)
     } catch (error) {
+      Cookies.remove('accessToken')
       setUser(null)
     }
   }, [setUser, commit])
 
   if (user === undefined) {
-    return <ClipLoader size={150} />
+    return (
+      <div className='flex justify-center mt-20'>
+        <ClipLoader color={theme.colors.primary.DEFAULT} size={150} />
+      </div>
+    )
   }
 
   return (
     <Router history={history}>
       <Switch>
-        <Route path={ROUTES.login} component={LoginPageComponent} exact={true} requiresAuth={false} />
+        <Route path={ROUTES.login} component={LoginPageComponent} exact={true} requiresAuth={false} layout={EmptyLayout} />
         <Route
           path={ROUTES.userIdSession}
           component={SessionByUserIdPageComponent}
@@ -111,7 +120,6 @@ export default function App (): React.ReactElement {
         {/* Default route */}
         <Route path='/' component={NotFoundPageComponent} exact={false} />
       </Switch>
-      <BottomNav />
     </Router>
   )
 }
