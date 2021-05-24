@@ -21,7 +21,6 @@ function Item ({ icon: Icon, name, to, currentPath }: ItemProps): React.ReactEle
   const [coords, setCoords] = useState<{ x: number, y: number }>({ x: -1, y: -1 })
   const match = matchPath(to, { path: currentPath, exact: true })
   const isActive = match !== null
-  console.log('coords', coords)
 
   useEffect(() => {
     if (coords.x !== -1 && coords.y !== -1) {
@@ -49,7 +48,7 @@ function Item ({ icon: Icon, name, to, currentPath }: ItemProps): React.ReactEle
         'flex flex-col items-center w-full justify-center relative overflow-hidden',
         { 'text-on-primary': isActive, 'text-primary-100': !isActive }
       )}>
-      <Icon className={cn({ 'text-on-primary': isActive, 'text-primary-100': !isActive })} />
+      <Icon className={cn('pointer-events-none', { 'text-on-primary': isActive, 'text-primary-100': !isActive })} />
       <span className={styles.label}>{name}</span>
       {isRippling && (
         <span className={styles.ripple} style={{ left: coords.x, top: coords.y }} />
@@ -66,12 +65,12 @@ interface BottomNavProps {
  */
 export default function BottomNav ({ currentPath }: BottomNavProps): React.ReactElement {
   const user = useRecoilValue<UserState>(userStateAtom)
-  if (user === null) throw new Error('Bottom nav requires user.')
+  if (user === null || user === undefined) throw new Error('Bottom nav requires user.')
 
   return (
     <nav className='fixed bottom-0 left-0 bg-primary w-full h-14 flex justify-center'>
       <div className='flex justify-between max-w-4xl w-full'>
-        <Item icon={PersonIcon} name='My Stream' to={generatePath(ROUTES.userIdSession, { userId: user?.sub })} currentPath={currentPath} />
+        <Item icon={PersonIcon} name='My Stream' to={generatePath(ROUTES.userIdSession, { userId: user.sub })} currentPath={currentPath} />
         <Item icon={VideogameAssetIcon} name='Sub Games' to={ROUTES.sessions} currentPath={currentPath} />
         <Item icon={SettingsIcon} name='Settings' to={ROUTES.settings} currentPath={currentPath} />
       </div>

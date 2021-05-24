@@ -1,5 +1,5 @@
 .label {
-  @apply text-xs relative;
+  @apply text-xs relative pointer-events-none;
   top: -.15rem;
 }
 

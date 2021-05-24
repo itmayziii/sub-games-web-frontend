@@ -1,3 +1,24 @@
+directive @complexity(value: Int!, multipliers: [String!]) on FIELD_DEFINITION
+
+directive @constraint(
+  """Strings"""
+  minLength: Int
+  maxLength: Int
+  startsWith: String
+  endsWith: String
+  contains: String
+  notContains: String
+  pattern: String
+  format: String
+
+  """Integers / Floats"""
+  min: Int
+  max: Int
+  exclusiveMin: Int
+  exclusiveMax: Int
+  multipleOf: Int
+) on INPUT_FIELD_DEFINITION
+
 """Exposes a URL that specifies the behaviour of this scalar."""
 directive @specifiedBy(
   """The URL that specifies the behaviour of this scalar."""
@@ -5,10 +26,11 @@ directive @specifiedBy(
 ) on SCALAR
 
 input ActiveSubGameSessionByUserIdInput {
-  id: ID!
+  userId: ID!
 }
 
-type ActiveSubGameSessionByUserIdPayload {
+type ActiveSubGameSessionByUserIdPayload implements Payload {
+  complexity: Int!
   subGameSession: SubGameSession
 }
 
@@ -21,26 +43,35 @@ input ActiveSubGameSessionByUsernameInput {
   username: ID!
 }
 
-type ActiveSubGameSessionByUsernamePayload {
+type ActiveSubGameSessionByUsernamePayload implements Payload {
+  complexity: Int!
   subGameSession: SubGameSession
 }
 
+scalar first_Int_min_0
+
 input JoinSubGameSessionQueueInput {
   userId: ID!
-  sessionId: ID!
+  subGameSessionId: ID!
 }
 
-type JoinSubGameSessionQueuePayload {
+type JoinSubGameSessionQueuePayload implements Payload {
+  complexity: Int!
   subGameSession: SubGameSession!
 }
 
+scalar maxActivePlayers_Int_min_0_max_1000
+
+scalar maxPlayCount_Int_min_0_max_1000
+
 input MovePlayerQueueOrderInput {
   userId: ID!
-  order: Int!
-  sessionId: ID!
+  order: order_Int_NotNull_max_5000!
+  subGameSessionId: ID!
 }
 
-type MovePlayerQueueOrderPayload {
+type MovePlayerQueueOrderPayload implements Payload {
+  complexity: Int!
   subGameSession: SubGameSession!
 }
 
@@ -59,12 +90,18 @@ interface Node {
   id: ID!
 }
 
+scalar order_Int_NotNull_max_5000
+
 """https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo"""
 type PageInfo {
   hasPreviousPage: Boolean!
   hasNextPage: Boolean!
   startCursor: String!
   endCursor: String!
+}
+
+interface Payload {
+  complexity: Int!
 }
 
 type Player implements UserInterface & PlayerInterface & Node {
@@ -98,11 +135,14 @@ type QueuedPlayer implements UserInterface & PlayerInterface & Node {
   order: Int!
 }
 
+scalar refreshToken_String_maxLength_255
+
 input RefreshTokenInput {
-  refreshToken: ID
+  refreshToken: refreshToken_String_maxLength_255
 }
 
-type RefreshTokenPayload {
+type RefreshTokenPayload implements Payload {
+  complexity: Int!
   success: Boolean!
 }
 
@@ -129,16 +169,17 @@ type SessionEdge {
 
 """https://relay.dev/graphql/connections.htm#sec-Arguments"""
 input SessionsByUserIdInput {
-  id: ID!
+  userId: ID!
 
   """
   https://relay.dev/graphql/connections.htm#sec-Forward-pagination-arguments
   """
-  first: Int
+  first: first_Int_min_0
   after: String
 }
 
-type SessionsConnection {
+type SessionsConnection implements Payload {
+  complexity: Int!
   edges: [SessionEdge!]!
   pageInfo: PageInfo!
 }
@@ -146,12 +187,13 @@ type SessionsConnection {
 input StartSubGameSessionInput {
   ownerId: ID!
   userMustVerifyEpic: Boolean
-  maxPlayCount: Int
-  maxActivePlayers: Int
+  maxPlayCount: maxPlayCount_Int_min_0_max_1000
+  maxActivePlayers: maxActivePlayers_Int_min_0_max_1000
   isSubOnly: Boolean
 }
 
-type StartSubGameSessionPayload {
+type StartSubGameSessionPayload implements Payload {
+  complexity: Int!
   subGameSession: SubGameSession!
 }
 
@@ -172,7 +214,8 @@ input SubGameSessionByIdInput {
   id: ID!
 }
 
-type SubGameSessionByIdPayload {
+type SubGameSessionByIdPayload implements Payload {
+  complexity: Int!
   subGameSession: SubGameSession
 }
 

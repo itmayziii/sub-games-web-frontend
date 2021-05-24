@@ -2,7 +2,7 @@ import graphql from 'babel-plugin-relay/macro'
 
 export const SubGameSessionByUserIdQuery = graphql`
   query relaySubGameSessionByUserIdQuery($userId: ID!) {
-    activeSubGameSessionByUserId(input: { id: $userId }) {
+    activeSubGameSessionByUserId(input: { userId: $userId }) {
       subGameSession {
         id
         isSubOnly
@@ -14,7 +14,7 @@ export const SubGameSessionByUserIdQuery = graphql`
 
 export const SessionsByUserIdQuery = graphql`
   query relaySessionsByUserIdQuery($userId: ID!) {
-    sessionsByUserId(input: { id: $userId }) {
+    sessionsByUserId(input: { userId: $userId }) {
       edges {
         node {
           id

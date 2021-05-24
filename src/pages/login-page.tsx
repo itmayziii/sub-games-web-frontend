@@ -18,11 +18,11 @@ export default function LoginPage (): React.ReactElement {
     <div className='flex flex-col justify-center items-center mt-20 md:mt-32'>
       <Button
         href={twitchLoginURL}
-        className='flex items-center px-6 py-4'
+        className='flex items-center px-6 py-2'
         component='a'
       >
-        <img src={twitchLogoWhite} alt='twitch logo' className='w-8' />
-        <span className='ml-2'>Login with Twitch</span>
+        <img src={twitchLogoWhite} alt='twitch logo' className='w-8 pointer-events-none' />
+        <span className='ml-2 pointer-events-none'>Login with Twitch</span>
       </Button>
     </div>
   )

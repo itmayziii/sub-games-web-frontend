@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+/* @relayHash db54de61900f6f1f8da29d8acd2a3128 */
 
 import { ConcreteRequest } from "relay-runtime";
 export type relaySubGameSessionByUserIdQueryVariables = {
@@ -26,7 +27,7 @@ export type relaySubGameSessionByUserIdQuery = {
 query relaySubGameSessionByUserIdQuery(
   $userId: ID!
 ) {
-  activeSubGameSessionByUserId(input: {id: $userId}) {
+  activeSubGameSessionByUserId(input: {userId: $userId}) {
     subGameSession {
       id
       isSubOnly
@@ -52,7 +53,7 @@ v1 = [
         "fields": [
           {
             "kind": "Variable",
-            "name": "id",
+            "name": "userId",
             "variableName": "userId"
           }
         ],
@@ -119,14 +120,13 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "74c09e8c8a070683fa97e9759e6aff09",
-    "id": null,
+    "id": "db54de61900f6f1f8da29d8acd2a3128",
     "metadata": {},
     "name": "relaySubGameSessionByUserIdQuery",
     "operationKind": "query",
-    "text": "query relaySubGameSessionByUserIdQuery(\n  $userId: ID!\n) {\n  activeSubGameSessionByUserId(input: {id: $userId}) {\n    subGameSession {\n      id\n      isSubOnly\n      maxActivePlayers\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();
-(node as any).hash = '2566af24e84461fc59eadd0dc927f601';
+(node as any).hash = 'fe856734574fd9aeb7680a281655bc5b';
 export default node;

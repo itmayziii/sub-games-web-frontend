@@ -1,0 +1,5 @@
+{
+  "30035d1d3781872378dc3980bd2231fa": "mutation relayRefreshTokenMutation {\n  refreshToken {\n    success\n  }\n}\n",
+  "c45daad5b94b99226ced67d1c0f9728f": "query relaySessionsByUserIdQuery(\n  $userId: ID!\n) {\n  sessionsByUserId(input: {userId: $userId}) {\n    edges {\n      node {\n        id\n        subGameSession {\n          id\n          isActive\n        }\n        twitchSession {\n          gameName\n          thumbnailURL\n          user {\n            id\n            username\n          }\n          viewerCount\n        }\n      }\n    }\n  }\n}\n",
+  "db54de61900f6f1f8da29d8acd2a3128": "query relaySubGameSessionByUserIdQuery(\n  $userId: ID!\n) {\n  activeSubGameSessionByUserId(input: {userId: $userId}) {\n    subGameSession {\n      id\n      isSubOnly\n      maxActivePlayers\n    }\n  }\n}\n"
+}

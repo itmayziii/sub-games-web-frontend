@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+/* @relayHash 30035d1d3781872378dc3980bd2231fa */
 
 import { ConcreteRequest } from "relay-runtime";
 export type relayRefreshTokenMutationVariables = {};
@@ -63,12 +64,11 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "30035d1d3781872378dc3980bd2231fa",
-    "id": null,
+    "id": "30035d1d3781872378dc3980bd2231fa",
     "metadata": {},
     "name": "relayRefreshTokenMutation",
     "operationKind": "mutation",
-    "text": "mutation relayRefreshTokenMutation {\n  refreshToken {\n    success\n  }\n}\n"
+    "text": null
   }
 };
 })();

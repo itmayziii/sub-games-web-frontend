@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Router, Switch } from 'react-router-dom'
+import { Redirect, Router, Switch } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import Route from './components/route'
 import ROUTES from './routes'
@@ -116,6 +116,9 @@ export default function App (): React.ReactElement {
           component={SettingsPageComponent}
           exact={true}
         />
+
+        {/* No homepage, just redirect to sessions page. */}
+        <Redirect from='/' to={ROUTES.sessions} exact={true} />
 
         {/* Default route */}
         <Route path='/' component={NotFoundPageComponent} exact={false} />

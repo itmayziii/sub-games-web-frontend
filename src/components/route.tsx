@@ -7,6 +7,8 @@ import { useRecoilState } from 'recoil'
 import { UserState, userStateAtom } from '../recoil/atoms/user'
 import ROUTES from '../routes'
 import AppLayout from '../layouts/app-layout'
+import { ThemeState, themeStateAtom } from '../recoil/atoms/theme'
+import GenericErrorPage from './errors/generic-error-page'
 
 interface RouteProps {
   component: ComponentType<{ preloadedQuery?: PreloadedQuery<any> }>
@@ -17,8 +19,14 @@ interface RouteProps {
   requiresAuth?: boolean
 }
 
-function TemporaryError (): React.ReactElement {
-  return <div>There was an error</div>
+function Loader (): React.ReactElement {
+  const [theme] = useRecoilState<ThemeState>(themeStateAtom)
+
+  return (
+    <div className='flex justify-center items-center mt-20'>
+      <ClipLoader color={theme.colors.primary.DEFAULT} size={150} />
+    </div>
+  )
 }
 
 export default function Route ({
@@ -39,8 +47,8 @@ export default function Route ({
     <RouteComponent path={path} exact={exact} render={(routeProps) => {
       return (
         <Layout currentPath={path} >
-          <ErrorBoundary fallback={TemporaryError}>
-            <Suspense fallback={<ClipLoader size={150} />}>
+          <ErrorBoundary fallback={GenericErrorPage}>
+            <Suspense fallback={<Loader />}>
               {prepare === undefined ? <Component /> : <Component preloadedQuery={prepare(routeProps.match.params)}/>}
             </Suspense>
           </ErrorBoundary>

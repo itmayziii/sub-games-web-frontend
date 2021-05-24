@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+/* @relayHash c45daad5b94b99226ced67d1c0f9728f */
 
 import { ConcreteRequest } from "relay-runtime";
 export type relaySessionsByUserIdQueryVariables = {
@@ -39,7 +40,7 @@ export type relaySessionsByUserIdQuery = {
 query relaySessionsByUserIdQuery(
   $userId: ID!
 ) {
-  sessionsByUserId(input: {id: $userId}) {
+  sessionsByUserId(input: {userId: $userId}) {
     edges {
       node {
         id
@@ -85,7 +86,7 @@ v2 = [
         "fields": [
           {
             "kind": "Variable",
-            "name": "id",
+            "name": "userId",
             "variableName": "userId"
           }
         ],
@@ -213,14 +214,13 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "749a4bc82a0962985975246063518ade",
-    "id": null,
+    "id": "c45daad5b94b99226ced67d1c0f9728f",
     "metadata": {},
     "name": "relaySessionsByUserIdQuery",
     "operationKind": "query",
-    "text": "query relaySessionsByUserIdQuery(\n  $userId: ID!\n) {\n  sessionsByUserId(input: {id: $userId}) {\n    edges {\n      node {\n        id\n        subGameSession {\n          id\n          isActive\n        }\n        twitchSession {\n          gameName\n          thumbnailURL\n          user {\n            id\n            username\n          }\n          viewerCount\n        }\n      }\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();
-(node as any).hash = '2b8a0bfb07f7912d0a9dd7a8668c4ef8';
+(node as any).hash = '7c1c66a72b5e764a6ce43c330c4178f7';
 export default node;
