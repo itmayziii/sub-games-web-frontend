@@ -10,7 +10,7 @@ export default function LoginPage (): React.ReactElement {
   }, [location.search])
 
   const redirectURL = query.get('redirect_url')
-  let twitchLoginURL = 'http://localhost:4000/v1/login'
+  let twitchLoginURL = 'https://local-api.sub-games.com/v1/login'
   if (redirectURL !== null) {
     twitchLoginURL += `?redirect_url=${redirectURL}`
   }
@@ -21,7 +21,7 @@ export default function LoginPage (): React.ReactElement {
         className='flex items-center px-6 py-2'
         component='a'
       >
-        <img src={twitchLogoWhite} alt='twitch logo' className='w-8 pointer-events-none' />
+        <img src={twitchLogoWhite} alt='twitch logo' className='w-6 pointer-events-none' />
         <span className='ml-2 pointer-events-none'>Login with Twitch</span>
       </Button>
     </div>

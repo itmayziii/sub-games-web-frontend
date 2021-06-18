@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js' --html result.html",
-    "start": "craco start",
+    "start": "HTTPS=true SSL_CRT_FILE=local-sub-games-com.crt SSL_KEY_FILE=local-sub-games-com.key HOST=local.sub-games.com craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",

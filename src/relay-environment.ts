@@ -24,7 +24,7 @@ async function fetchPersistedQuery (id: string, query: string | null | undefined
   }
 
   const persistedQueryParams = new URLSearchParams({ extensions: JSON.stringify(persistedQuery), variables: JSON.stringify(variables) })
-  return await fetch(`http://localhost:4000/graphql?${persistedQueryParams.toString()}`, {
+  return await fetch(`https://local-api.sub-games.com/graphql?${persistedQueryParams.toString()}`, {
     method: 'GET',
     credentials: 'include'
   })
@@ -42,7 +42,7 @@ async function fetchPersistedQuery (id: string, query: string | null | undefined
  * how long a URL can get for older browsers so a GET request might not be appropriate since a query can get fairly large.
  */
 async function fetchGraphQL (query: string | undefined | null, variables: Variables, extensions: any = {}): Promise<any> {
-  return await fetch('http://localhost:4000/graphql', {
+  return await fetch('https://local-api.sub-games.com/graphql', {
     method: 'POST',
     credentials: 'include',
     headers: {
