@@ -2,6 +2,7 @@
   "name": "sub-games-companion-web-frontend",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js' --html result.html",
     "start": "HTTPS=true SSL_CRT_FILE=local-sub-games-com.crt SSL_KEY_FILE=local-sub-games-com.key HOST=local.sub-games.com craco start",
